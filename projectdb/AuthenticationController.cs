@@ -47,7 +47,7 @@ namespace projectdb
             }
         }
 
-        public int? Login(string email, string password)
+        public (int UserId, string Role)? Login(string email, string password)
         {
             try
             {
@@ -56,17 +56,21 @@ namespace projectdb
                     connection.Open();
 
                     // Assuming the primary key is named 'UserId'
-                    string query = "SELECT UserId FROM Users WHERE Email = @Email AND Password = @Password";
+                    string query = "SELECT UserId, Role FROM Users WHERE Email = @Email AND Password = @Password";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Email", email);
                         command.Parameters.AddWithValue("@Password", password);
 
-                        object result = command.ExecuteScalar();
-                        if (result != null && result != DBNull.Value)
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            return Convert.ToInt32(result);
+                            if (reader.Read())
+                            {
+                                int userId = Convert.ToInt32(reader["UserId"]);
+                                string role = reader["Role"] != DBNull.Value ? reader["Role"].ToString() : null;
+                                return (userId, role);
+                            }
                         }
                         return null;
                     }
