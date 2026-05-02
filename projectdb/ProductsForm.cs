@@ -13,7 +13,7 @@ namespace Project
 {
     public partial class ProductsForm : Form
     {
-        string connectionString = "Data Source=localhost;Initial Catalog=Project;Integrated Security=True;TrustServerCertificate=True";
+        private projectdb.DatabaseService _dbService = new projectdb.DatabaseService();
 
         public ProductsForm()
         {
@@ -30,7 +30,7 @@ namespace Project
             // We want to see all the products
             string query = "SELECT * FROM Product";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = _dbService.GetConnection())
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(query, con);
                 DataTable table = new DataTable();
@@ -63,7 +63,7 @@ namespace Project
                     // The SQL command to delete the specific product
                     string query = "DELETE FROM Product WHERE ID = @id"; // CHANGE 'ID' IF YOUR COLUMN NAME IS DIFFERENT
 
-                    using (SqlConnection con = new SqlConnection(connectionString))
+                    using (SqlConnection con = _dbService.GetConnection())
                     {
                         using (SqlCommand cmd = new SqlCommand(query, con))
                         {

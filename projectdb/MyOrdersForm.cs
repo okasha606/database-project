@@ -13,7 +13,7 @@ namespace Project
 {
     public partial class MyOrdersForm : Form
     {
-        string connectionString = "Data Source=localhost;Initial Catalog=Project;Integrated Security=True;TrustServerCertificate=True";
+        private projectdb.DatabaseService _dbService = new projectdb.DatabaseService();
 
         public MyOrdersForm()
         {
@@ -33,7 +33,7 @@ namespace Project
 
             string query = "SELECT ID, UserID, Status, CreatedAt FROM Orders";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = _dbService.GetConnection())
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(query, con);
                 DataTable table = new DataTable();
@@ -82,7 +82,7 @@ namespace Project
         {
             string query = "UPDATE Orders SET Status = 'Cancelled' WHERE ID = @id";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = _dbService.GetConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {

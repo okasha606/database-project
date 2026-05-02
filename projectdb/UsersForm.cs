@@ -13,7 +13,7 @@ namespace Project
 {
     public partial class UsersForm : Form
     {
-        string connectionString = "Data Source=localhost;Initial Catalog=Project;Integrated Security=True;TrustServerCertificate=True";
+        private projectdb.DatabaseService _dbService = new projectdb.DatabaseService();
 
         public UsersForm()
         {
@@ -22,11 +22,11 @@ namespace Project
 
         private void UsersForm_Load(object sender, EventArgs e)
         {
-            
+
             // Fetching all data from the Users table
             string query = "SELECT * FROM Users";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = _dbService.GetConnection())
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(query, con);
                 DataTable table = new DataTable();

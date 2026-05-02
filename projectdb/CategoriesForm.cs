@@ -13,7 +13,7 @@ namespace Project
 {
     public partial class CategoriesForm : Form
     {
-        string connectionString = "Data Source=localhost;Initial Catalog=Project;Integrated Security=True;TrustServerCertificate=True";
+        private projectdb.DatabaseService _dbService = new projectdb.DatabaseService();
 
         public CategoriesForm()
         {
@@ -25,7 +25,7 @@ namespace Project
             // Fetching from the Category table
             string query = "SELECT * FROM Category";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = _dbService.GetConnection())
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(query, con);
                 DataTable table = new DataTable();
