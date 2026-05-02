@@ -14,8 +14,19 @@ namespace projectdb
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Add login logic here
-            MessageBox.Show("Login clicked");
+            string email = txtEmail.Text;
+            string password = txtPassword.Text;
+
+            AuthenticationController authController = new AuthenticationController();
+            if (authController.Login(email, password))
+            {
+                MessageBox.Show("Login successful!");
+                // Navigate to next screen
+            }
+            else
+            {
+                MessageBox.Show("Invalid email or password.");
+            }
         }
 
         private void btnCreateAccount_Click(object sender, EventArgs e)
