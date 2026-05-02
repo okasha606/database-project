@@ -47,7 +47,7 @@ namespace projectdb
             }
         }
 
-        public bool Login(string email, string password)
+        public int? Login(string email, string password)
         {
             try
             {
@@ -55,23 +55,28 @@ namespace projectdb
                 {
                     connection.Open();
 
-                    string query = "SELECT COUNT(1) FROM Users WHERE Email = @Email AND Password = @Password";
+                    // Assuming the primary key is named 'UserId'
+                    string query = "SELECT UserId FROM Users WHERE Email = @Email AND Password = @Password";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Email", email);
                         command.Parameters.AddWithValue("@Password", password);
 
-                        int count = (int)command.ExecuteScalar();
-                        return count > 0;
+                        object result = command.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            return Convert.ToInt32(result);
+                        }
+                        return null;
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Log exception
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                return false;
+                // Show exception to help debug (e.g. if 'Id' is not the correct column name)
+                System.Windows.Forms.MessageBox.Show("Database Error in Login: " + ex.Message);
+                return null;
             }
         }
     }

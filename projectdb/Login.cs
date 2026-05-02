@@ -18,8 +18,14 @@ namespace projectdb
             string password = txtPassword.Text;
 
             AuthenticationController authController = new AuthenticationController();
-            if (authController.Login(email, password))
+            int? userId = authController.Login(email, password);
+
+            if (userId.HasValue)
             {
+                Console.WriteLine($"User ID: {userId.Value}"); // Debugging line to check the retrieved User IID
+                // Store the User Id in the global static class
+                Session.UserId = userId.Value;
+
                 MessageBox.Show("Login successful!");
                 // Navigate to next screen
             }
