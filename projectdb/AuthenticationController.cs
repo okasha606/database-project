@@ -19,7 +19,7 @@ namespace projectdb
                 using (SqlConnection connection = _dbService.GetConnection())
                 {
                     connection.Open();
-                    
+
                     // Note: Always hash passwords in a real-world application!
                     string query = @"INSERT INTO Users (FirstName, LastName, Email, Password, Phone, AddressName, Latitude, Longitude) 
                                      VALUES (@FirstName, @LastName, @Email, @Password, @Phone, @AddressName, @Lat, @Long)";

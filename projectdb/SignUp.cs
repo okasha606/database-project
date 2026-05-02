@@ -10,7 +10,7 @@ namespace projectdb
         private void btnSignUp_Click(object sender, EventArgs e)
         {
             AuthenticationController authController = new AuthenticationController();
-            
+
             bool success = authController.CreateAccount(
                 txtFirstName.Text,
                 txtLastName.Text,
