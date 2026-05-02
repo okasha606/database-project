@@ -20,16 +20,15 @@ namespace projectdb
                 {
                     connection.Open();
 
-                    // Note: Always hash passwords in a real-world application!
-                    string query = @"INSERT INTO Users (FirstName, LastName, Email, Password, Phone, AddressName, Latitude, Longitude) 
-                                     VALUES (@FirstName, @LastName, @Email, @Password, @Phone, @AddressName, @Lat, @Long)";
+                    string query = @"INSERT INTO Users (Email, Password, Role, FirstName, LastName, Phone, AddressName, Lat, Long) 
+                                     VALUES (@Email, @Password, 'User', @FirstName, @LastName, @Phone, @AddressName, @Lat, @Long)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        command.Parameters.AddWithValue("@Email", email);
+                        command.Parameters.AddWithValue("@Password", password);
                         command.Parameters.AddWithValue("@FirstName", firstName);
                         command.Parameters.AddWithValue("@LastName", lastName);
-                        command.Parameters.AddWithValue("@Email", email);
-                        command.Parameters.AddWithValue("@Password", password); // Should be hashed
                         command.Parameters.AddWithValue("@Phone", phone);
                         command.Parameters.AddWithValue("@AddressName", addressName);
                         command.Parameters.AddWithValue("@Lat", lat);
@@ -42,7 +41,7 @@ namespace projectdb
             }
             catch (Exception ex)
             {
-                // Log exception
+
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 return false;
             }
