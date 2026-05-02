@@ -1,3 +1,5 @@
+using Project;
+
 namespace projectdb
 {
     public partial class Login : Form
@@ -27,8 +29,14 @@ namespace projectdb
                 Session.UserId = userInfo.Value.UserId;
                 Session.Role = userInfo.Value.Role;
 
-                MessageBox.Show($"Login successful! Welcome, {Session.Role}.");
+                //MessageBox.Show($"Login successful! Welcome, {Session.Role}.");
                 // Navigate to next screen
+                if (userInfo.Value.Role == "Admin")
+                {
+                    AdminDashboard adminDashboard = new AdminDashboard();
+                    adminDashboard.Show();
+                    this.Hide();
+                }
             }
             else
             {
