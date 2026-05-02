@@ -1,16 +1,9 @@
-﻿namespace projectdb
+namespace projectdb
 {
-    partial class Login
+    partial class SignUp
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,19 +15,33 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
+            lblName = new Label();
+            txtName = new TextBox();
             lblEmail = new Label();
             txtEmail = new TextBox();
             lblPassword = new Label();
             txtPassword = new TextBox();
-            btnLogin = new Button();
-            btnCreateAccount = new Button();
+            btnSignUp = new Button();
+            btnBackToLogin = new Button();
             SuspendLayout();
+            // 
+            // lblName
+            // 
+            lblName.AutoSize = true;
+            lblName.Location = new Point(350, 100);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(63, 25);
+            lblName.TabIndex = 0;
+            lblName.Text = "Name:";
+            // 
+            // txtName
+            // 
+            txtName.Location = new Point(450, 97);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(200, 31);
+            txtName.TabIndex = 1;
             // 
             // lblEmail
             // 
@@ -42,7 +49,7 @@
             lblEmail.Location = new Point(350, 150);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(58, 25);
-            lblEmail.TabIndex = 0;
+            lblEmail.TabIndex = 2;
             lblEmail.Text = "Email:";
             // 
             // txtEmail
@@ -50,7 +57,7 @@
             txtEmail.Location = new Point(450, 147);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(200, 31);
-            txtEmail.TabIndex = 1;
+            txtEmail.TabIndex = 3;
             // 
             // lblPassword
             // 
@@ -58,7 +65,7 @@
             lblPassword.Location = new Point(350, 200);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(91, 25);
-            lblPassword.TabIndex = 2;
+            lblPassword.TabIndex = 4;
             lblPassword.Text = "Password:";
             // 
             // txtPassword
@@ -67,53 +74,56 @@
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(200, 31);
-            txtPassword.TabIndex = 3;
+            txtPassword.TabIndex = 5;
             // 
-            // btnLogin
+            // btnSignUp
             // 
-            btnLogin.Location = new Point(450, 250);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(90, 40);
-            btnLogin.TabIndex = 4;
-            btnLogin.Text = "Login";
-            btnLogin.UseVisualStyleBackColor = true;
-            btnLogin.Click += btnLogin_Click;
+            btnSignUp.Location = new Point(450, 250);
+            btnSignUp.Name = "btnSignUp";
+            btnSignUp.Size = new Size(90, 40);
+            btnSignUp.TabIndex = 6;
+            btnSignUp.Text = "Sign Up";
+            btnSignUp.UseVisualStyleBackColor = true;
+            btnSignUp.Click += btnSignUp_Click;
             // 
-            // btnCreateAccount
+            // btnBackToLogin
             // 
-            btnCreateAccount.Location = new Point(550, 250);
-            btnCreateAccount.Name = "btnCreateAccount";
-            btnCreateAccount.Size = new Size(130, 40);
-            btnCreateAccount.TabIndex = 5;
-            btnCreateAccount.Text = "Create Account";
-            btnCreateAccount.UseVisualStyleBackColor = true;
-            btnCreateAccount.Click += btnCreateAccount_Click;
+            btnBackToLogin.Location = new Point(550, 250);
+            btnBackToLogin.Name = "btnBackToLogin";
+            btnBackToLogin.Size = new Size(130, 40);
+            btnBackToLogin.TabIndex = 7;
+            btnBackToLogin.Text = "Back to Login";
+            btnBackToLogin.UseVisualStyleBackColor = true;
+            btnBackToLogin.Click += btnBackToLogin_Click;
             // 
-            // Login
+            // SignUp
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1012, 614);
-            Controls.Add(btnCreateAccount);
-            Controls.Add(btnLogin);
+            Controls.Add(btnBackToLogin);
+            Controls.Add(btnSignUp);
             Controls.Add(txtPassword);
             Controls.Add(lblPassword);
             Controls.Add(txtEmail);
             Controls.Add(lblEmail);
-            Name = "Login";
-            Text = "Login";
-            Load += Login_Load;
+            Controls.Add(txtName);
+            Controls.Add(lblName);
+            Name = "SignUp";
+            Text = "Sign Up";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private Label lblName;
+        private TextBox txtName;
         private Label lblEmail;
         private TextBox txtEmail;
         private Label lblPassword;
         private TextBox txtPassword;
-        private Button btnLogin;
-        private Button btnCreateAccount;
+        private Button btnSignUp;
+        private Button btnBackToLogin;
     }
 }
