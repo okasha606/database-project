@@ -6,10 +6,24 @@ namespace projectdb
 {
     public class DatabaseService
     {
-        private string connectionStringKamal = "Server=DESKTOP-9VOLK8E;Database=project;Trusted_Connection=True;TrustServerCertificate=True;";
+
+     
+        string kamal = "Server=DESKTOP-9VOLK8E;Database=project;Trusted_Connection=True;TrustServerCertificate=True;";
+        string badwy = @"Data Source=MAHMOUDBADWY\MSSQLSERVER01;Initial Catalog=project;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=""""SQL Server Management Studio"""";Command Timeout=0";
+        string gerges = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=project;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=2147483647";
+        
+        private string GetConnectionS()
+        {
+             
+             return kamal;
+
+
+        }
         public SqlConnection GetConnection()
         {
-            return new SqlConnection(connectionStringKamal);
+            string _connectionString =  GetConnectionS();
+            return new SqlConnection(_connectionString);
+
         }
     }
 }
