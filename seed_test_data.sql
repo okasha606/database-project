@@ -24,3 +24,4 @@ INSERT INTO Product (VendorID, CategoryID, Name, Description, Price, Stock) VALU
  (@vendId, @cat3, 'T-Shirt',    'Cotton tee',    200,   30);
 
 PRINT 'Seed complete';
+
