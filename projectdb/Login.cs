@@ -37,6 +37,12 @@ namespace projectdb
                     adminDashboard.Show();
                     this.Hide();
                 }
+                else if (userInfo.Value.Role == "User" || userInfo.Value.Role == "Customer")
+                {
+                    UserHomeForm home = new UserHomeForm();
+                    home.Show();
+                    this.Hide();
+                }
             }
             else
             {
