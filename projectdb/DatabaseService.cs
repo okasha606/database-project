@@ -6,11 +6,10 @@ namespace projectdb
 {
     public class DatabaseService
     {
-        private readonly string _connectionString = @"Data Source=MAHMOUDBADWY\MSSQLSERVER01;Initial Catalog=project;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=""SQL Server Management Studio"";Command Timeout=0";
-
+        private string connectionStringKamal = "Server=DESKTOP-9VOLK8E;Database=project;Trusted_Connection=True;TrustServerCertificate=True;";
         public SqlConnection GetConnection()
         {
-            return new SqlConnection(_connectionString);
+            return new SqlConnection(connectionStringKamal);
         }
     }
 }
