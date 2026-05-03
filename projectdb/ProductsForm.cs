@@ -14,6 +14,7 @@ namespace Project
     public partial class ProductsForm : Form
     {
         private projectdb.DatabaseService _dbService = new projectdb.DatabaseService();
+        private int _selectedProductId = -1;
 
         public ProductsForm()
         {
@@ -39,6 +40,27 @@ namespace Project
                 {
                     adapter.Fill(table);
                     dataGridView1.DataSource = table;
+
+                    // Ensure Edit/Delete button columns exist once
+                    // Remove existing if present
+                    if (dataGridView1.Columns.Contains("Edit"))
+                        dataGridView1.Columns.Remove("Edit");
+                    if (dataGridView1.Columns.Contains("Delete"))
+                        dataGridView1.Columns.Remove("Delete");
+
+                    var editCol = new DataGridViewButtonColumn();
+                    editCol.Name = "Edit";
+                    editCol.HeaderText = "Edit";
+                    editCol.Text = "Edit";
+                    editCol.UseColumnTextForButtonValue = true;
+                    dataGridView1.Columns.Add(editCol);
+
+                    var deleteCol = new DataGridViewButtonColumn();
+                    deleteCol.Name = "Delete";
+                    deleteCol.HeaderText = "Delete";
+                    deleteCol.Text = "Delete";
+                    deleteCol.UseColumnTextForButtonValue = true;
+                    dataGridView1.Columns.Add(deleteCol);
                 }
                 catch (Exception ex)
                 {
@@ -113,7 +135,63 @@ namespace Project
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return;
 
+            var grid = dataGridView1;
+
+            // Edit button clicked
+            if (grid.Columns[e.ColumnIndex].Name == "Edit")
+            {
+                int id = Convert.ToInt32(grid.Rows[e.RowIndex].Cells[0].Value);
+                var editForm = new ProductEditForm(_dbService, id);
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
+
+            // Delete button clicked
+            if (grid.Columns[e.ColumnIndex].Name == "Delete")
+            {
+                int id = Convert.ToInt32(grid.Rows[e.RowIndex].Cells[0].Value);
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this product?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    string query = "DELETE FROM Product WHERE ID = @id";
+                    using (SqlConnection con = _dbService.GetConnection())
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", id);
+                        try
+                        {
+                            con.Open();
+                            int rows = cmd.ExecuteNonQuery();
+                            if (rows > 0) LoadData();
+                        }
+                        catch (SqlException ex)
+                        {
+                            if (ex.Number == 547)
+                                MessageBox.Show("Cannot delete this product because it is linked to existing orders.");
+                            else
+                                MessageBox.Show("Database error: " + ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Show a simple add/edit form
+            var form = new ProductEditForm(_dbService);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadData();
+            }
         }
     }
 }
